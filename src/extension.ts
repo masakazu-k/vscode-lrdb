@@ -1,7 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { WorkspaceFolder, DebugConfiguration, ProviderResult, CancellationToken } from 'vscode';
+import { ProviderResult } from 'vscode';
 import * as path from 'path';
 import { LuaDebugSession } from './lrdbDebug';
 

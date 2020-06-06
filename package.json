@@ -27,7 +27,7 @@
 	"main": "./out/extension",
 	"scripts": {
 		"vscode:prepublish": "tsc -p ./",
-		"watch": "tsc -w -p ./src --sourceRoot ./src",
+		"watch": "tsc -w -p ./src",
 		"compile": "tsc -watch -p ./ --sourceRoot ./src",
 		"test": "node ./node_modules/mocha/bin/mocha -u tdd ./out/test/"
 	},
@@ -55,7 +55,7 @@
 			{
 				"type": "lrdb",
 				"label": "Lua Debug",
-				"program": "./out/src/debugAdapter.js",
+				"program": "./out/debugAdapter.js",
 				"runtime": "node",
 				"languages": [
 					"lua"
@@ -117,7 +117,10 @@
 								"default": null
 							},
 							"sourceRoot": {
-								"type": ["string", "array"],
+								"type": [
+									"string",
+									"array"
+								],
 								"description": "script source root directory. to be used in souce file matching at breakpoints.",
 								"default": "${workspaceFolder}"
 							},
