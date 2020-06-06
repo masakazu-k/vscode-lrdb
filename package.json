@@ -1,7 +1,7 @@
 {
 	"name": "lrdb",
-	"displayName": "LRDB",
-	"description": "Lua Remote DeBugger",
+	"displayName": "LRDB(For Aseprite)",
+	"description": "Lua Remote DeBugger (For Aseprite)",
 	"version": "0.3.4",
 	"publisher": "satoren",
 	"engines": {
@@ -19,16 +19,17 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/satoren/vscode-lrdb.git"
+		"url": "https://github.com/masakazu-k/vscode-lrdb.git"
 	},
 	"bugs": {
-		"url": "https://github.com/satoren/vscode-lrdb/issues"
+		"url": "https://github.com/masakazu-k/vscode-lrdb/issues"
 	},
 	"main": "./out/extension",
 	"scripts": {
-		"vscode:prepublish": "tsc -p ./",
+		"pack": "vsce package",
+		"prepublish": "tsc -p ./",
+		"compile": "tsc -p ./src",
 		"watch": "tsc -w -p ./src",
-		"compile": "tsc -watch -p ./ --sourceRoot ./src",
 		"test": "node ./node_modules/mocha/bin/mocha -u tdd ./out/test/"
 	},
 	"devDependencies": {
@@ -128,6 +129,11 @@
 								"type": "boolean",
 								"description": "Automatically stop after launch.",
 								"default": true
+							},
+							"useAbsolutePath": {
+								"type": "boolean",
+								"description": "Use absolute path for file resolution.",
+								"default": true
 							}
 						}
 					},
@@ -158,6 +164,11 @@
 							"stopOnEntry": {
 								"type": "boolean",
 								"description": "Automatically stop after launch.",
+								"default": true
+							},
+							"useAbsolutePath": {
+								"type": "boolean",
+								"description": "Use absolute path for file resolution.",
 								"default": true
 							}
 						}

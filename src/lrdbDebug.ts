@@ -19,6 +19,8 @@ export interface LaunchRequestArguments extends DebugProtocol.LaunchRequestArgum
 	port: number;
 	sourceRoot?: string | string[];
 	stopOnEntry?: boolean;
+
+	useAbsolutePath?: boolean;
 }
 
 
@@ -28,6 +30,8 @@ export interface AttachRequestArguments extends DebugProtocol.AttachRequestArgum
 	sourceRoot: string | string[];
 
 	stopOnEntry?: boolean;
+
+	useAbsolutePath?: boolean;
 }
 
 
@@ -289,7 +293,7 @@ export class LuaDebugSession extends DebugSession {
 		this.sendResponse(response);
 	}
 
-	private setupSourceEnv(sourceRoot: string[]) {
+	private setupSourceEnv(sourceRoot: string[], useAbsolutePath: boolean) {
 		this.convertClientLineToDebugger = (line: number): number => {
 			return line;
 		}
@@ -298,6 +302,15 @@ export class LuaDebugSession extends DebugSession {
 		}
 
 		this.convertClientPathToDebugger = (clientPath: string): string => {
+			if (useAbsolutePath && path.isAbsolute(clientPath)) {
+				var resolvedClient = path.resolve(clientPath);
+				// TODO: Interim measures
+				// Windows 10 : Unify the beginning (drive letter) of the remote and client file paths to uppercase
+				resolvedClient = resolvedClient.replace(/^[a-z]:/g, function (val) {
+					return val.toUpperCase();
+				});
+				return resolvedClient;
+			}
 			for (let index = 0; index < sourceRoot.length; index++) {
 				var root = sourceRoot[index];
 				var resolvedRoot = path.resolve(root);
@@ -339,7 +352,7 @@ export class LuaDebugSession extends DebugSession {
 			sourceRoot = [sourceRoot];
 		}
 
-		this.setupSourceEnv(sourceRoot);
+		this.setupSourceEnv(sourceRoot, args.useAbsolutePath);
 		const programArg = args.args ? args.args : [];
 
 		const port = args.port ? args.port : 21110;
@@ -398,7 +411,7 @@ export class LuaDebugSession extends DebugSession {
 			sourceRoot = [sourceRoot];
 		}
 
-		this.setupSourceEnv(sourceRoot);
+		this.setupSourceEnv(sourceRoot, args.useAbsolutePath);
 
 		this._debug_client = new LRDBTCPClient(args.port, args.host);
 		this._debug_client.on_event = (event: DebugServerEvent) => { this.handleServerEvents(event) };
