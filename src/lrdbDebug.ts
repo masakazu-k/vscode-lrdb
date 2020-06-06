@@ -1,6 +1,6 @@
 import {
 	DebugSession,
-	InitializedEvent, TerminatedEvent, ContinuedEvent, StoppedEvent, BreakpointEvent, OutputEvent, Event,
+	InitializedEvent, TerminatedEvent, ContinuedEvent, StoppedEvent, OutputEvent,
 	Thread, StackFrame, Scope, Source, Handles, Breakpoint
 } from 'vscode-debugadapter';
 import { DebugProtocol } from 'vscode-debugprotocol';
@@ -302,8 +302,7 @@ export class LuaDebugSession extends DebugSession {
 				var root = sourceRoot[index];
 				var resolvedRoot = path.resolve(root);
 				var resolvedClient = path.resolve(clientPath);
-				if (resolvedClient.startsWith(resolvedRoot))
-				{
+				if (resolvedClient.startsWith(resolvedRoot)) {
 					return path.relative(resolvedRoot, resolvedClient);
 				}
 			}
@@ -331,7 +330,7 @@ export class LuaDebugSession extends DebugSession {
 		}
 	}
 
-	protected launchRequest(response: DebugProtocol.LaunchResponse, args: LaunchRequestArguments): void {
+	protected async launchRequest(response: DebugProtocol.LaunchResponse, args: LaunchRequestArguments) {
 		this._stopOnEntry = args.stopOnEntry;
 		const cwd = args.cwd ? args.cwd : process.cwd();
 		var sourceRoot = args.sourceRoot ? args.sourceRoot : cwd;

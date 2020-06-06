@@ -10,8 +10,9 @@
             "args": ["--extensionDevelopmentPath=${workspaceRoot}" ],
             "stopOnEntry": false,
             "sourceMaps": true,
-            "outFiles": [ "${workspaceRoot}/out/src/**/*.js" ],
-            "preLaunchTask": "npm"
+            "outFiles": [ "${workspaceRoot}/out/**/*.js" ],
+			"preLaunchTask": "npm: watch",
+			"trace": true
         },
 		{
 			"type": "node",
@@ -21,7 +22,8 @@
 			"program": "${workspaceRoot}/src/debugAdapter.ts",
 			"args": [ "--server=4711" ],
 			"sourceMaps": true,
-			"outFiles": [ "${workspaceRoot}/out/**/*.js" ]
+			"outFiles": [ "${workspaceRoot}/out/**/*.js" ],
+			"trace": true
 		},
         {
             "name": "Launch Tests",
@@ -32,7 +34,7 @@
             "stopOnEntry": false,
             "sourceMaps": true,
             "outFiles": [ "${workspaceRoot}/out/test/**/*.js" ],
-            "preLaunchTask": "npm"
+            "preLaunchTask": "npm: watch"
         },
 		{
 			"type": "node",
@@ -49,7 +51,7 @@
 			"sourceMaps": true,
 			"outFiles": [ "${workspaceRoot}/out/test/**/*.js" ],
 			"internalConsoleOptions": "openOnSessionStart",
-            "preLaunchTask": "npm"
+            "preLaunchTask": "npm: watch"
 		}
     ],
 	"compounds": [
